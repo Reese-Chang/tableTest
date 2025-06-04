@@ -1,0 +1,1 @@
+{"file":"index-DpzI2JYa.js","mappings":";;;;;;;;;;;;;;;;;AAII,eAAW,cAAc;;;;;;;;;;;;","names":[],"sources":["../../../../pages/index.vue"],"sourcesContent":["<template>\n    <div></div>\n</template>\n<script setup>\n    navigateTo('/productForm')\n</script>"],"version":3}

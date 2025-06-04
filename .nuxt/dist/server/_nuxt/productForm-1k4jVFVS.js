@@ -1,0 +1,336 @@
+import { ref, resolveComponent, mergeProps, withCtx, createVNode, toDisplayString, createTextVNode, createBlock, openBlock, unref, useSSRContext } from "vue";
+import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
+const allProduct = /* @__PURE__ */ JSON.parse('[{"id":"P001","name":"無線滑鼠","category":"電腦周邊","price":4175,"cost":2852,"quantity":84,"stockIn":285,"sold":201,"status":"active"},{"id":"P002","name":"機械式鍵盤","category":"電腦周邊","price":4682,"cost":1336,"quantity":74,"stockIn":148,"sold":74,"status":"active"},{"id":"P003","name":"藍牙喇叭","category":"行動裝置","price":1836,"cost":899,"quantity":132,"stockIn":278,"sold":146,"status":"active"},{"id":"P004","name":"USB-C 充電線","category":"配件","price":553,"cost":37,"quantity":148,"stockIn":268,"sold":120,"status":"inactive"},{"id":"P005","name":"行動電源 10000mAh","category":"行動裝置","price":4017,"cost":3252,"quantity":119,"stockIn":171,"sold":52,"status":"active"},{"id":"P006","name":"27 吋螢幕","category":"辦公用品","price":4190,"cost":144,"quantity":13,"stockIn":75,"sold":62,"status":"active"},{"id":"P007","name":"筆電支架","category":"音響設備","price":899,"cost":270,"quantity":0,"stockIn":82,"sold":82,"status":"inactive"},{"id":"P008","name":"USB HUB","category":"音響設備","price":1497,"cost":144,"quantity":127,"stockIn":150,"sold":23,"status":"active"},{"id":"P009","name":"無線耳機","category":"音響設備","price":4822,"cost":3308,"quantity":160,"stockIn":231,"sold":71,"status":"inactive"},{"id":"P010","name":"鍵盤清潔組","category":"辦公用品","price":3922,"cost":2743,"quantity":63,"stockIn":197,"sold":134,"status":"active"},{"id":"P011","name":"隨身碟 64GB","category":"配件","price":2090,"cost":1517,"quantity":136,"stockIn":263,"sold":127,"status":"active"},{"id":"P012","name":"外接硬碟 1TB","category":"電腦周邊","price":3054,"cost":3043,"quantity":77,"stockIn":198,"sold":121,"status":"inactive"},{"id":"P013","name":"監視攝影機","category":"行動裝置","price":4486,"cost":2420,"quantity":190,"stockIn":243,"sold":53,"status":"active"},{"id":"P014","name":"手機三腳架","category":"配件","price":2080,"cost":1451,"quantity":170,"stockIn":253,"sold":83,"status":"inactive"},{"id":"P015","name":"車用充電器","category":"配件","price":2042,"cost":882,"quantity":123,"stockIn":263,"sold":140,"status":"active"},{"id":"P016","name":"HDMI 傳輸線","category":"配件","price":687,"cost":145,"quantity":157,"stockIn":298,"sold":141,"status":"active"},{"id":"P017","name":"無線投影器","category":"電腦周邊","price":3370,"cost":2881,"quantity":109,"stockIn":265,"sold":156,"status":"inactive"},{"id":"P018","name":"藍光光碟機","category":"電腦周邊","price":2532,"cost":1213,"quantity":31,"stockIn":141,"sold":110,"status":"active"},{"id":"P019","name":"充電座","category":"行動裝置","price":2709,"cost":1702,"quantity":45,"stockIn":178,"sold":133,"status":"active"},{"id":"P020","name":"耳麥組","category":"音響設備","price":4744,"cost":3787,"quantity":127,"stockIn":215,"sold":88,"status":"inactive"},{"id":"P021","name":"USB風扇","category":"辦公用品","price":3217,"cost":2955,"quantity":158,"stockIn":286,"sold":128,"status":"active"},{"id":"P022","name":"Type-C轉接頭","category":"配件","price":2184,"cost":2032,"quantity":113,"stockIn":236,"sold":123,"status":"active"},{"id":"P023","name":"無線簡報器","category":"辦公用品","price":4237,"cost":3736,"quantity":41,"stockIn":170,"sold":129,"status":"active"},{"id":"P024","name":"電競滑鼠墊","category":"電腦周邊","price":2777,"cost":1190,"quantity":30,"stockIn":156,"sold":126,"status":"inactive"},{"id":"P025","name":"手機冷卻器","category":"行動裝置","price":1488,"cost":914,"quantity":97,"stockIn":143,"sold":46,"status":"active"},{"id":"P026","name":"電源供應器","category":"電腦周邊","price":3856,"cost":3044,"quantity":28,"stockIn":104,"sold":76,"status":"active"},{"id":"P027","name":"主機板","category":"電腦周邊","price":4763,"cost":3320,"quantity":61,"stockIn":173,"sold":112,"status":"inactive"},{"id":"P028","name":"CPU 散熱器","category":"電腦周邊","price":3533,"cost":2333,"quantity":140,"stockIn":273,"sold":133,"status":"active"},{"id":"P029","name":"顯示卡支架","category":"電腦周邊","price":1288,"cost":736,"quantity":66,"stockIn":127,"sold":61,"status":"active"},{"id":"P030","name":"固態硬碟 512GB","category":"電腦周邊","price":3268,"cost":2699,"quantity":93,"stockIn":243,"sold":150,"status":"active"},{"id":"P031","name":"音效卡","category":"音響設備","price":2399,"cost":1825,"quantity":19,"stockIn":81,"sold":62,"status":"inactive"},{"id":"P032","name":"無線分享器","category":"行動裝置","price":3156,"cost":2440,"quantity":121,"stockIn":276,"sold":155,"status":"active"},{"id":"P033","name":"網路線 10m","category":"配件","price":811,"cost":409,"quantity":200,"stockIn":250,"sold":50,"status":"active"},{"id":"P034","name":"NAS 儲存裝置","category":"電腦周邊","price":4980,"cost":3900,"quantity":12,"stockIn":98,"sold":86,"status":"inactive"},{"id":"P035","name":"UPS 不斷電系統","category":"電腦周邊","price":4788,"cost":3980,"quantity":95,"stockIn":200,"sold":105,"status":"active"},{"id":"P036","name":"USB燈條","category":"配件","price":356,"cost":200,"quantity":148,"stockIn":260,"sold":112,"status":"inactive"},{"id":"P037","name":"多功能轉接頭","category":"配件","price":799,"cost":453,"quantity":180,"stockIn":220,"sold":40,"status":"active"},{"id":"P038","name":"行動電源快充線","category":"配件","price":688,"cost":320,"quantity":123,"stockIn":198,"sold":75,"status":"active"},{"id":"P039","name":"磁吸充電線","category":"配件","price":599,"cost":259,"quantity":89,"stockIn":150,"sold":61,"status":"inactive"},{"id":"P040","name":"筆記型電腦","category":"行動裝置","price":47888,"cost":36888,"quantity":8,"stockIn":28,"sold":20,"status":"active"},{"id":"P041","name":"桌機主機","category":"電腦周邊","price":35800,"cost":28900,"quantity":14,"stockIn":40,"sold":26,"status":"active"},{"id":"P042","name":"工作站電腦","category":"電腦周邊","price":68900,"cost":52800,"quantity":10,"stockIn":25,"sold":15,"status":"active"},{"id":"P043","name":"電競耳機","category":"音響設備","price":3588,"cost":2480,"quantity":82,"stockIn":120,"sold":38,"status":"active"},{"id":"P044","name":"高效能滑鼠","category":"電腦周邊","price":2688,"cost":1888,"quantity":101,"stockIn":199,"sold":98,"status":"inactive"},{"id":"P045","name":"筆電包","category":"行動裝置","price":899,"cost":599,"quantity":134,"stockIn":180,"sold":46,"status":"active"},{"id":"P046","name":"螢幕掛燈","category":"辦公用品","price":1499,"cost":899,"quantity":90,"stockIn":120,"sold":30,"status":"active"},{"id":"P047","name":"Webcam","category":"音響設備","price":2490,"cost":1890,"quantity":42,"stockIn":100,"sold":58,"status":"inactive"},{"id":"P048","name":"遊戲控制器","category":"電腦周邊","price":2590,"cost":1990,"quantity":27,"stockIn":87,"sold":60,"status":"active"},{"id":"P049","name":"藍牙接收器","category":"配件","price":490,"cost":280,"quantity":183,"stockIn":200,"sold":17,"status":"active"},{"id":"P050","name":"攝影補光燈","category":"辦公用品","price":1890,"cost":1350,"quantity":120,"stockIn":200,"sold":80,"status":"active"}]');
+const _sfc_main = {
+  __name: "productForm",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const showProduct = ref(allProduct.slice(0, 15));
+    function toCurrency(val) {
+      if (!val) return "0";
+      return "$" + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function grossProfit(price, cost, num) {
+      if (num) {
+        return toCurrency((price - cost) * num);
+      } else {
+        return toCurrency(price - cost);
+      }
+    }
+    function handleCurrentChange(val) {
+      if (val == 1) {
+        showProduct.value = allProduct.slice(0, 15);
+      } else {
+        showProduct.value = allProduct.slice((val - 1) * 15, val * 15);
+      }
+    }
+    function tag(val) {
+      if (val == "active") {
+        return "販售中";
+      } else {
+        return "停賣";
+      }
+    }
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_el_table = resolveComponent("el-table");
+      const _component_el_table_column = resolveComponent("el-table-column");
+      const _component_el_form = resolveComponent("el-form");
+      const _component_el_tag = resolveComponent("el-tag");
+      const _component_el_pagination = resolveComponent("el-pagination");
+      _push(`<div${ssrRenderAttrs(mergeProps({ style: { "max-height": "100vh", "overflow": "hidden" } }, _attrs))}>`);
+      _push(ssrRenderComponent(_component_el_table, {
+        class: "tableBox",
+        ref: "multipleTable",
+        data: showProduct.value,
+        "tooltip-effect": "dark"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              type: "index",
+              width: "50"
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              type: "selection",
+              width: "30"
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              type: "expand",
+              width: "10"
+            }, {
+              default: withCtx((props, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  _push3(ssrRenderComponent(_component_el_form, {
+                    "label-position": "left",
+                    inline: "",
+                    class: "detailBox"
+                  }, {
+                    default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                      if (_push4) {
+                        _push4(`<div${_scopeId3}><span${_scopeId3}>${ssrInterpolate(props.row.category)}</span><span${_scopeId3}>產品：${ssrInterpolate(props.row.name)}</span><span${_scopeId3}>淨額：${ssrInterpolate(grossProfit(props.row.price, props.row.cost, props.row.sold))}</span><span${_scopeId3}>${ssrInterpolate(tag(props.row.status))}</span></div><div${_scopeId3}><span${_scopeId3}>成本：${ssrInterpolate(toCurrency(props.row.cost))}</span><span${_scopeId3}>售價：${ssrInterpolate(toCurrency(props.row.price))}</span><span${_scopeId3}>毛利：${ssrInterpolate(grossProfit(props.row.price, props.row.cost))}</span></div><div${_scopeId3}><span${_scopeId3}>進貨數量：${ssrInterpolate(props.row.stockIn)}</span><span${_scopeId3}>銷售數量：${ssrInterpolate(props.row.sold)}</span><span${_scopeId3}>剩餘庫存：${ssrInterpolate(props.row.quantity)}</span></div>`);
+                      } else {
+                        return [
+                          createVNode("div", null, [
+                            createVNode("span", null, toDisplayString(props.row.category), 1),
+                            createVNode("span", null, "產品：" + toDisplayString(props.row.name), 1),
+                            createVNode("span", null, "淨額：" + toDisplayString(grossProfit(props.row.price, props.row.cost, props.row.sold)), 1),
+                            createVNode("span", null, toDisplayString(tag(props.row.status)), 1)
+                          ]),
+                          createVNode("div", null, [
+                            createVNode("span", null, "成本：" + toDisplayString(toCurrency(props.row.cost)), 1),
+                            createVNode("span", null, "售價：" + toDisplayString(toCurrency(props.row.price)), 1),
+                            createVNode("span", null, "毛利：" + toDisplayString(grossProfit(props.row.price, props.row.cost)), 1)
+                          ]),
+                          createVNode("div", null, [
+                            createVNode("span", null, "進貨數量：" + toDisplayString(props.row.stockIn), 1),
+                            createVNode("span", null, "銷售數量：" + toDisplayString(props.row.sold), 1),
+                            createVNode("span", null, "剩餘庫存：" + toDisplayString(props.row.quantity), 1)
+                          ])
+                        ];
+                      }
+                    }),
+                    _: 2
+                  }, _parent3, _scopeId2));
+                } else {
+                  return [
+                    createVNode(_component_el_form, {
+                      "label-position": "left",
+                      inline: "",
+                      class: "detailBox"
+                    }, {
+                      default: withCtx(() => [
+                        createVNode("div", null, [
+                          createVNode("span", null, toDisplayString(props.row.category), 1),
+                          createVNode("span", null, "產品：" + toDisplayString(props.row.name), 1),
+                          createVNode("span", null, "淨額：" + toDisplayString(grossProfit(props.row.price, props.row.cost, props.row.sold)), 1),
+                          createVNode("span", null, toDisplayString(tag(props.row.status)), 1)
+                        ]),
+                        createVNode("div", null, [
+                          createVNode("span", null, "成本：" + toDisplayString(toCurrency(props.row.cost)), 1),
+                          createVNode("span", null, "售價：" + toDisplayString(toCurrency(props.row.price)), 1),
+                          createVNode("span", null, "毛利：" + toDisplayString(grossProfit(props.row.price, props.row.cost)), 1)
+                        ]),
+                        createVNode("div", null, [
+                          createVNode("span", null, "進貨數量：" + toDisplayString(props.row.stockIn), 1),
+                          createVNode("span", null, "銷售數量：" + toDisplayString(props.row.sold), 1),
+                          createVNode("span", null, "剩餘庫存：" + toDisplayString(props.row.quantity), 1)
+                        ])
+                      ]),
+                      _: 2
+                    }, 1024)
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "name",
+              label: "產品",
+              width: "220"
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "category",
+              label: "類別",
+              width: "220"
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "price",
+              label: "售價",
+              width: "120",
+              sortable: ""
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "sold",
+              label: "銷售數量",
+              width: "120",
+              sortable: ""
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "quantity",
+              label: "庫存",
+              width: "120",
+              sortable: ""
+            }, null, _parent2, _scopeId));
+            _push2(ssrRenderComponent(_component_el_table_column, {
+              prop: "status",
+              label: "狀態",
+              width: "120",
+              sortable: ""
+            }, {
+              default: withCtx((scope, _push3, _parent3, _scopeId2) => {
+                if (_push3) {
+                  if (scope.row.status == "active") {
+                    _push3(ssrRenderComponent(_component_el_tag, { type: "success" }, {
+                      default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(`${ssrInterpolate(tag(scope.row.status))}`);
+                        } else {
+                          return [
+                            createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  } else {
+                    _push3(ssrRenderComponent(_component_el_tag, { type: "danger" }, {
+                      default: withCtx((_2, _push4, _parent4, _scopeId3) => {
+                        if (_push4) {
+                          _push4(`${ssrInterpolate(tag(scope.row.status))}`);
+                        } else {
+                          return [
+                            createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                          ];
+                        }
+                      }),
+                      _: 2
+                    }, _parent3, _scopeId2));
+                  }
+                } else {
+                  return [
+                    scope.row.status == "active" ? (openBlock(), createBlock(_component_el_tag, {
+                      key: 0,
+                      type: "success"
+                    }, {
+                      default: withCtx(() => [
+                        createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                      ]),
+                      _: 2
+                    }, 1024)) : (openBlock(), createBlock(_component_el_tag, {
+                      key: 1,
+                      type: "danger"
+                    }, {
+                      default: withCtx(() => [
+                        createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                      ]),
+                      _: 2
+                    }, 1024))
+                  ];
+                }
+              }),
+              _: 1
+            }, _parent2, _scopeId));
+          } else {
+            return [
+              createVNode(_component_el_table_column, {
+                type: "index",
+                width: "50"
+              }),
+              createVNode(_component_el_table_column, {
+                type: "selection",
+                width: "30"
+              }),
+              createVNode(_component_el_table_column, {
+                type: "expand",
+                width: "10"
+              }, {
+                default: withCtx((props) => [
+                  createVNode(_component_el_form, {
+                    "label-position": "left",
+                    inline: "",
+                    class: "detailBox"
+                  }, {
+                    default: withCtx(() => [
+                      createVNode("div", null, [
+                        createVNode("span", null, toDisplayString(props.row.category), 1),
+                        createVNode("span", null, "產品：" + toDisplayString(props.row.name), 1),
+                        createVNode("span", null, "淨額：" + toDisplayString(grossProfit(props.row.price, props.row.cost, props.row.sold)), 1),
+                        createVNode("span", null, toDisplayString(tag(props.row.status)), 1)
+                      ]),
+                      createVNode("div", null, [
+                        createVNode("span", null, "成本：" + toDisplayString(toCurrency(props.row.cost)), 1),
+                        createVNode("span", null, "售價：" + toDisplayString(toCurrency(props.row.price)), 1),
+                        createVNode("span", null, "毛利：" + toDisplayString(grossProfit(props.row.price, props.row.cost)), 1)
+                      ]),
+                      createVNode("div", null, [
+                        createVNode("span", null, "進貨數量：" + toDisplayString(props.row.stockIn), 1),
+                        createVNode("span", null, "銷售數量：" + toDisplayString(props.row.sold), 1),
+                        createVNode("span", null, "剩餘庫存：" + toDisplayString(props.row.quantity), 1)
+                      ])
+                    ]),
+                    _: 2
+                  }, 1024)
+                ]),
+                _: 1
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "name",
+                label: "產品",
+                width: "220"
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "category",
+                label: "類別",
+                width: "220"
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "price",
+                label: "售價",
+                width: "120",
+                sortable: ""
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "sold",
+                label: "銷售數量",
+                width: "120",
+                sortable: ""
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "quantity",
+                label: "庫存",
+                width: "120",
+                sortable: ""
+              }),
+              createVNode(_component_el_table_column, {
+                prop: "status",
+                label: "狀態",
+                width: "120",
+                sortable: ""
+              }, {
+                default: withCtx((scope) => [
+                  scope.row.status == "active" ? (openBlock(), createBlock(_component_el_tag, {
+                    key: 0,
+                    type: "success"
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                    ]),
+                    _: 2
+                  }, 1024)) : (openBlock(), createBlock(_component_el_tag, {
+                    key: 1,
+                    type: "danger"
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(toDisplayString(tag(scope.row.status)), 1)
+                    ]),
+                    _: 2
+                  }, 1024))
+                ]),
+                _: 1
+              })
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`<div>測試123</div><div class="pageNumBox">`);
+      _push(ssrRenderComponent(_component_el_pagination, {
+        layout: "prev, pager, next",
+        "page-size": 15,
+        total: unref(allProduct).length,
+        onCurrentChange: handleCurrentChange
+      }, null, _parent));
+      _push(`</div></div>`);
+    };
+  }
+};
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("pages/productForm.vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+export {
+  _sfc_main as default
+};
+//# sourceMappingURL=productForm-1k4jVFVS.js.map
